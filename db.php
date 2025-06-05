@@ -23,6 +23,16 @@ try {
         FOREIGN KEY (id_sala) REFERENCES sale(id)
     )");
     
+    $checkStmt = $initPdo->query("SELECT COUNT(*) FROM sale");
+    $count = $checkStmt->fetchColumn();
+    
+    if ($count == 0) {
+        $initPdo->exec("INSERT INTO sale (numer, pojemnosc, typ) VALUES
+        ('101', 30, 'klasa'),
+        ('201', 15, 'pracownia'),
+        ('gym', 60, 'sala gimnastyczna')");
+    }
+    
     $initPdo = null;
 } catch (PDOException $e) {
     die("Database initialization error: " . $e->getMessage());
